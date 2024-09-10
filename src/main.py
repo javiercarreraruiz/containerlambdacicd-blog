@@ -1,10 +1,10 @@
 import json
 import os
 import ast
-# Example of an internal libraries
+# Importing internal libraries
 from my_libs.helper_module import helper_function 
 from my_libs.another_helper_module import another_helper_function
-# Example of an external libraries
+# Importing external libraries
 import numpy as np
 
 def lambda_handler(event, context):
