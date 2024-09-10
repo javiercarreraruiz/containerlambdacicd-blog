@@ -69,6 +69,7 @@ aws iam put-role-policy \
     ]
 }'
 
+
 aws iam create-role \
 --role-name containerlambdacicd-codepipeline-role \
 --assume-role-policy-document '{
@@ -106,7 +107,7 @@ aws iam put-role-policy \
             "Action": [
                 "codestar-connections:UseConnection"
             ],
-            "Resource": "${GITHUB_CONNECTION_ARN}"
+            "Resource": "GITHUB_CONNECTION_ARN"
         },
         {
             "Effect": "Allow",
@@ -115,6 +116,7 @@ aws iam put-role-policy \
         }
     ]
 }'
+
 
 
 # Create the Lambda execution role and attach AWSLambdaBasicExecutionRole policy
