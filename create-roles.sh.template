@@ -107,7 +107,7 @@ aws iam put-role-policy \
             "Action": [
                 "codestar-connections:UseConnection"
             ],
-            "Resource": "GITHUB_CONNECTION_ARN"
+            "Resource": "${GITHUB_CONNECTION_ARN}"
         },
         {
             "Effect": "Allow",

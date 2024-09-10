@@ -43,6 +43,7 @@ aws ecr create-repository --repository-name lambda-from-container-image
 **IMPORTANT**: You need to adapt the next environment variables AND you need to install the _envsubst_ command in your machine.
 More info about envsubst here: [envsubst\(1\) - Linux manual page](https://man7.org/linux/man-pages/man1/envsubst.1.html)
 
+~***Remember you have to adapt these values:***~
 ```
 export ACCOUNT_ID=YOUR_AWS_12_DIGIT_ACCOUNT_NUMBER
 export REGION_ID=SOMETHING_LIKE_eu-west-1
@@ -50,8 +51,10 @@ export ARTIFACTS_BUCKET_NAME=THE_BUCKET_YOU_CREATED_PREVIOUSLY
 export GITHUB_CONNECTION_ARN=THE_AWS_CODECONNECTIONS_CONNECTION_ARN
 export GITHUB_USERNAME=yourgithubname
 export GITHUB_REPONAME=containerlambdacicd-blog
+```
 
 
+```
 envsubst '${ACCOUNT_ID} ${REGION_ID}' < buildspec.yml.template > buildspec.yml
 envsubst '${ARTIFACTS_BUCKET_NAME} ${GITHUB_CONNECTION_ARN} ${GITHUB_REPONAME} ${GITHUB_USERNAME} ${REGION_ID}' < pipeline.json.template > pipeline.json
 envsubst '${ACCOUNT_ID} ${ARTIFACTS_BUCKET_NAME} ${GITHUB_CONNECTION_ARN} ${GITHUB_REPONAME} ${GITHUB_USERNAME} ${REGION_ID}' < project-config.json.template > project-config.json
@@ -78,7 +81,6 @@ chmod +x create-roles.sh
 ./create-roles.sh
 ```
 
-NOTE: Ignore any errors like this: An error occurred (MalformedPolicyDocument) when calling the PutRolePolicy operation: The policy failed legacy parsing
 ## Create CodeBuild project and CodePipeline pipeline
 
 ```
