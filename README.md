@@ -71,7 +71,7 @@ git push origin main
 
 ## Create IAM roles
 
-Create the roles assumed by the CodeBuild and CodePipeline services:
+Create the roles assumed by the CodeBuild and CodePipeline services and the Lambda function:
 
 ```
 chmod +x create-roles.sh
