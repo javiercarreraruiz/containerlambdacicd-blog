@@ -31,12 +31,12 @@ aws ecr create-repository --repository-name lambda-from-container-image
 
 ## Create AWS CodeConnections connection
 
-Go to: https://console.aws.amazon.com/codesuite/settings/connections
-Choose you AWS region if it has changed
-Click on "Create Connection"
-Follow the instructions to create the connection to ~GitHub~. The name is not important but you can call it, for instance, _containerlambda-gh-connection_
-Choose you AWS region if it is changed and click on Connect
-Go back to https://console.aws.amazon.com/codesuite/settings/connections and copy the ARN of the new connection as you will assign it to an environment variable later
+* Go to: https://console.aws.amazon.com/codesuite/settings/connections
+* Choose your AWS region if it has changed
+* Click on "Create Connection"
+* Follow the instructions to create the connection to GitHub. The name is not important but you can call it, for instance, _containerlambda-gh-connection_
+* Choose your AWS region if it has changed and click on Connect
+* Go back to https://console.aws.amazon.com/codesuite/settings/connections and copy the ARN of the new connection as you will assign it to an environment variable later
 
 ## Replace placeholders in template files
 
