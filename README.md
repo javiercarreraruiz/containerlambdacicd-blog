@@ -78,6 +78,7 @@ chmod +x create-roles.sh
 ./create-roles.sh
 ```
 
+NOTE: Ignore any errors like this: An error occurred (MalformedPolicyDocument) when calling the PutRolePolicy operation: The policy failed legacy parsing
 ## Create CodeBuild project and CodePipeline pipeline
 
 ```
