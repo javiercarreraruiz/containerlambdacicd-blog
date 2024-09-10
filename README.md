@@ -71,6 +71,8 @@ git push origin main
 
 ## Create IAM roles
 
+Create the roles assumed by the CodeBuild and CodePipeline services:
+
 ```
 chmod +x create-roles.sh
 ./create-roles.sh
