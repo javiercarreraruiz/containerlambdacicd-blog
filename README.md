@@ -4,32 +4,32 @@
 
 ## Copy the GitHub repository
 
-Copy the repository into a new one you will own using this link:
+Copy the repository into a new one you will own using the following link:
 [Copy to a new repository from the repository template](https://github.com/new?template_name=containerlambdacicd-blog)
 
 ## Clone your new GitHub repository
 
-Assuming you called your new repo is called containerlambdacicd-blog-test, run this on your machine:
+Assuming you called your new repo is called containerlambdacicd-blog-mycopy, run this on your machine:
 
 ```
-git clone https://github.com/yourgithubname/containerlambdacicd-blog-test.git
-cd containerlambdacicd-blog-test
+git clone https://github.com/yourgithubname/containerlambdacicd-blog-mycopy.git
+cd containerlambdacicd-blog-mycopy
 ```
 
-## Create artifacts bucket
+## Create the artifacts bucket
 
 ```
 export ARTIFACTS_BUCKET_NAME=containerlambdacicd-blog-artifacts
 aws s3 mb s3://$ARTIFACTS_BUCKET_NAME
 ```
 
-## Create ECR repository
+## Create the ECR repository
 
 ```
 aws ecr create-repository --repository-name lambda-from-container-image
 ```
 
-## Create AWS CodeConnections connection
+## Create an AWS CodeConnections connection
 
 * Go to: https://console.aws.amazon.com/codesuite/settings/connections
 * Choose your AWS region if it has changed
@@ -50,7 +50,7 @@ export REGION_ID=SOMETHING_LIKE_eu-west-1
 export ARTIFACTS_BUCKET_NAME=THE_BUCKET_YOU_CREATED_PREVIOUSLY
 export GITHUB_CONNECTION_ARN=THE_AWS_CODECONNECTIONS_CONNECTION_ARN
 export GITHUB_USERNAME=yourgithubname
-export GITHUB_REPONAME=containerlambdacicd-blog
+export GITHUB_REPONAME=containerlambdacicd-blog-mycopy
 ```
 
 
@@ -81,7 +81,7 @@ chmod +x create-roles.sh
 ./create-roles.sh
 ```
 
-## Create CodeBuild project and CodePipeline pipeline
+## Create the CodeBuild project and the CodePipeline pipeline
 
 ```
 aws codebuild create-project --cli-input-json file://project-config.json
@@ -93,7 +93,6 @@ aws codepipeline create-pipeline --cli-input-json file://pipeline.json
 # Cleanup Steps
 
 ```
-
 # Delete CodeStar Connections connection
 aws codestar-connections delete-connection --connection-arn $GITHUB_CONNECTION_ARN
 
