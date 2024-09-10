@@ -5,7 +5,7 @@
 ## Copy the GitHub repository
 
 Copy the repository into a new one you will own using the following link:
-[Copy to a new repository from the repository template](https://github.com/new?template_name=containerlambdacicd-blog)
+[Copy to a new repository from the repository template](https://github.com/new?template_name=containerlambdacicd-blog&template_owner=javiercarreraruiz)
 
 ## Clone your new GitHub repository
 
