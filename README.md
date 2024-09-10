@@ -2,9 +2,20 @@
 
 # Setup Steps
 
-## Clone the GitHub repository
+## Copy the GitHub repository
 
-Clone repository: https://github.com/javiercarreraruiz/containerlambdacicd-blog.git
+Copy the repository into a new one you will own using this link:
+[Copy to a new repository from the repository template](https://github.com/new?template_name=containerlambdacicd-blog)
+
+## Clone your new GitHub repository
+
+Assuming you called your new repo is called containerlambdacicd-blog-test, run this on your machine:
+
+```
+git clone https://github.com/yourgithubname/containerlambdacicd-blog-test.git
+cd containerlambdacicd-blog-test
+```
+
 
 ## Create artifacts bucket
 
