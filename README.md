@@ -30,7 +30,7 @@ Go back to https://console.aws.amazon.com/codesuite/settings/connections and cop
 
 ## Replace placeholders in template files
 
-_IMPORTANT:_ You need to adapt the next environment variables AND you need to install the envsubst command in your machine
+_IMPORTANT:_ You need to adapt the next environment variables AND you need to install the *envsubst* command in your machine. More info about envsubst here: [envsubst\(1\) - Linux manual page](https://man7.org/linux/man-pages/man1/envsubst.1.html)
 
 ```
 export ACCOUNT_ID=YOUR_AWS_12_DIGIT_ACCOUNT_NUMBER
