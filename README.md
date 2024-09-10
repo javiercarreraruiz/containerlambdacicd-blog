@@ -32,15 +32,16 @@ aws ecr create-repository --repository-name lambda-from-container-image
 ## Create AWS CodeConnections connection
 
 Go to: https://console.aws.amazon.com/codesuite/settings/connections
-Choose you AWS region.
+Choose you AWS region if it has changed
 Click on "Create Connection"
-Follow the instructions to create the connection to GitHub. Call it containerlambda-gh-connection
-Choose the correct region if it changed on the Management Console and click on Connect
-Go back to https://console.aws.amazon.com/codesuite/settings/connections and copy the ARN of the new connection
+Follow the instructions to create the connection to ~GitHub~. The name is not important but you can call it, for instance, _containerlambda-gh-connection_
+Choose you AWS region if it is changed and click on Connect
+Go back to https://console.aws.amazon.com/codesuite/settings/connections and copy the ARN of the new connection as you will assign it to an environment variable later
 
 ## Replace placeholders in template files
 
-**\_IMPORTANT**:\_ You need to adapt the next environment variables AND you need to install the _envsubst_ command in your machine. More info about envsubst here: [envsubst\(1\) - Linux manual page](https://man7.org/linux/man-pages/man1/envsubst.1.html)
+**IMPORTANT**: You need to adapt the next environment variables AND you need to install the _envsubst_ command in your machine.
+More info about envsubst here: [envsubst\(1\) - Linux manual page](https://man7.org/linux/man-pages/man1/envsubst.1.html)
 
 ```
 export ACCOUNT_ID=YOUR_AWS_12_DIGIT_ACCOUNT_NUMBER
@@ -58,11 +59,21 @@ envsubst '${ACCOUNT_ID} ${ARTIFACTS_BUCKET_NAME} ${GITHUB_CONNECTION_ARN} ${GITH
 envsubst '${ACCOUNT_ID} ${ARTIFACTS_BUCKET_NAME} ${GITHUB_CONNECTION_ARN} ${GITHUB_REPONAME} ${GITHUB_USERNAME} ${REGION_ID}' < scripts/create_or_update_lambda_function.sh.template > scripts/create_or_update_lambda_function.sh
 ```
 
+## Push the changes to your GitHub repository
+
+The newly generated files need to be pushed to your repo:
+
+```
+git add .
+git commit -m "generate new files from templates"
+git push origin main
+```
+
 ## Create IAM roles
 
 ```
 chmod +x create-roles.sh
-./create-roles.sh*
+./create-roles.sh
 ```
 
 ## Create CodeBuild project and CodePipeline pipeline
@@ -71,4 +82,45 @@ chmod +x create-roles.sh
 aws codebuild create-project --cli-input-json file://project-config.json
 
 aws codepipeline create-pipeline --cli-input-json file://pipeline.json
+```
+
+
+# Cleanup Steps
+
+```
+
+# Delete CodeStar Connections connection
+aws codestar-connections delete-connection --connection-arn $GITHUB_CONNECTION_ARN
+
+# Delete CodePipeline
+aws codepipeline delete-pipeline --name MyLambdaPipeline
+
+# Delete CodeBuild project
+aws codebuild delete-project --name MyLambdaBuildProject
+
+# Delete the ECR repository (after deleting the images)
+aws ecr batch-delete-image --repository-name lambda-from-container-image --image-ids "$(aws ecr list-images --repository-name lambda-from-container-image --query 'imageIds[*]' --output json | jq -c '.[]')"
+aws ecr delete-repository --repository-name lambda-from-container-image --force
+
+# Delete Lambda function
+aws lambda delete-function --function-name container-lambda
+
+# Force delete Lambda role (detach all managed policies and delete role)
+for policy_arn in $(aws iam list-attached-role-policies --role-name lambda-execution-role --query 'AttachedPolicies[].PolicyArn' --output text); do
+  aws iam detach-role-policy --role-name lambda-execution-role --policy-arn $policy_arn
+done
+aws iam delete-role --role-name lambda-execution-role
+
+# Force delete CodePipeline role (delete inline policies, and delete role)
+for policy_name in $(aws iam list-role-policies --role-name containerlambdacicd-codepipeline-role --query 'PolicyNames[]' --output text); do
+  aws iam delete-role-policy --role-name containerlambdacicd-codepipeline-role --policy-name $policy_name
+done
+aws iam delete-role --role-name containerlambdacicd-codepipeline-role
+
+# Force delete CodeBuild role (delete inline policies, and delete role)
+for policy_name in $(aws iam list-role-policies --role-name containerlambdacicd-codebuild-role --query 'PolicyNames[]' --output text); do
+  aws iam delete-role-policy --role-name containerlambdacicd-codebuild-role --policy-name $policy_name
+done
+aws iam delete-role --role-name containerlambdacicd-codebuild-role
+
 ```
