@@ -125,4 +125,9 @@ for policy_name in $(aws iam list-role-policies --role-name containerlambdacicd-
 done
 aws iam delete-role --role-name containerlambdacicd-codebuild-role
 
+# Delete all objects in the artifacts bucket
+aws s3 rm s3://$ARTIFACTS_BUCKET_NAME --recursive
+
+# Delete the artifacts bucket
+aws s3api delete-bucket --bucket $ARTIFACTS_BUCKET_NAME
 ```
