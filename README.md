@@ -9,7 +9,7 @@ Copy the repository into a new one you will own using the following link:
 
 ## Clone your new GitHub repository
 
-Assuming you called your new repo is called containerlambdacicd-blog-mycopy, run this on your machine:
+Assuming you called your new repo is called containerlambdacicd-blog-mycopy, change the yourgithubname string to your GitHub username (or Org) run this on your machine:
 
 ```
 git clone https://github.com/yourgithubname/containerlambdacicd-blog-mycopy.git
