@@ -9,7 +9,7 @@ Copy the repository into a new one you will own using the following link:
 
 ## Clone your new GitHub repository
 
-Assuming you called your new repo is called containerlambdacicd-blog-mycopy, change the yourgithubname string to your GitHub username (or Org) run this on your machine:
+Assuming you called your new repo _containerlambdacicd-blog-mycopy_, change the _yourgithubname_ string to your GitHub username (or Org) run this on your machine:
 
 ```
 git clone https://github.com/yourgithubname/containerlambdacicd-blog-mycopy.git
@@ -31,19 +31,20 @@ aws ecr create-repository --repository-name lambda-from-container-image
 
 ## Create an AWS CodeConnections connection
 
-* Go to: https://console.aws.amazon.com/codesuite/settings/connections
-* Choose your AWS region if it has changed
-* Click on "Create Connection"
-* Follow the instructions to create the connection to GitHub. The name is not important but you can call it, for instance, _containerlambda-gh-connection_
-* Choose your AWS region if it has changed and click on Connect
-* Go back to https://console.aws.amazon.com/codesuite/settings/connections and copy the ARN of the new connection as you will assign it to an environment variable later
+- Go to: https://console.aws.amazon.com/codesuite/settings/connections
+- Choose your AWS region if it has changed
+- Click on "Create Connection"
+- Follow the instructions to create the connection to GitHub. The name is not important but you can call it, for instance, _containerlambda-gh-connection_
+- Choose your AWS region if it has changed and click on Connect
+- Go back to https://console.aws.amazon.com/codesuite/settings/connections and copy the ARN of the new connection as you will assign it to an environment variable later
 
 ## Replace placeholders in template files
 
-**IMPORTANT**: You need to adapt the next environment variables AND you need to install the _envsubst_ command in your machine.
-More info about envsubst here: [envsubst\(1\) - Linux manual page](https://man7.org/linux/man-pages/man1/envsubst.1.html)
+**IMPORTANT**: You need to adapt the next environment variables AND you need to have the _envsubst_ command in your machine.
+More info about _envsubst_ here: [envsubst\(1\) - Linux manual page](https://man7.org/linux/man-pages/man1/envsubst.1.html)
 
-***Remember you have to adapt these values:***
+**_Remember you have to edit these values:_**
+
 ```
 export ACCOUNT_ID=YOUR_AWS_12_DIGIT_ACCOUNT_NUMBER
 export REGION_ID=SOMETHING_LIKE_eu-west-1
@@ -52,7 +53,6 @@ export GITHUB_CONNECTION_ARN=THE_AWS_CODECONNECTIONS_CONNECTION_ARN
 export GITHUB_USERNAME=yourgithubname
 export GITHUB_REPONAME=containerlambdacicd-blog-mycopy
 ```
-
 
 ```
 envsubst '${ACCOUNT_ID} ${REGION_ID}' < buildspec.yml.template > buildspec.yml
@@ -63,8 +63,6 @@ envsubst '${ACCOUNT_ID} ${ARTIFACTS_BUCKET_NAME} ${GITHUB_CONNECTION_ARN} ${GITH
 ```
 
 ## Push the changes to your GitHub repository
-
-The newly generated files need to be pushed to your repo:
 
 ```
 git add .
@@ -88,7 +86,6 @@ aws codebuild create-project --cli-input-json file://project-config.json
 
 aws codepipeline create-pipeline --cli-input-json file://pipeline.json
 ```
-
 
 # Cleanup Steps
 
